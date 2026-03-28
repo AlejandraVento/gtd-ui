@@ -5,7 +5,9 @@ body {
   --dangerBackground: #ffc5c5;
   /* Border */
   --lightGreyBorder: #c7c7c7;
-  /* text */
+  /* Links */
+  --mainLink: #5d5fef;
+  /* Text */
   --mainText: #363c3f;
   --secondaryText: #d4af37;
   --lightText: white;
@@ -22,7 +24,9 @@ body {
   --dangerBackground: #ffc5c5;
   /* Border */
   --lightGreyBorder: #e4e4e7;
-  /* text */
+  /* Links */
+  --mainLink: #5d5fef;
+  /* Text */
   --mainText: #ffffff;
   --secondaryText: #d4af37;
   --lightText: #ffffff;
