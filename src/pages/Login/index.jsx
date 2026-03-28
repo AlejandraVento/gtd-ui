@@ -82,7 +82,7 @@ export default function Login() {
             <Text fontSize="lg" mb={0} textAlign="justify">
               La plataforma de GTD, (Gestión de Trámites Docentes) es un
               proyecto que tiene como objetivo automatizar la gestión de
-              solicitudes de tramite del personal docente de la Facultad de
+              solicitudes de trámite del personal docente de la Facultad de
               Ciencias de la Universidad Central de Venezuela, con la
               participación de forma activa de docentes y el personal
               administrativo.

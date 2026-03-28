@@ -4,6 +4,8 @@ import { Box } from '@chakra-ui/react';
 import './App.css';
 import Login from './pages/Login';
 import Navbar from './pages/Navbar';
+import InformacionProcesos from './pages/InformacionProcesos';
+import TiposTramites from './pages/TiposTramites';
 
 const App = () => {
   return (
@@ -12,8 +14,13 @@ const App = () => {
         <Navbar />
         <Routes>
           <>
-            <Route path="/" element={<Login />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route
+              path="/informacion-procesos"
+              element={<InformacionProcesos />}
+            />
+            <Route path="/tipos-tramites" element={<TiposTramites />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </>
         </Routes>
       </Box>
