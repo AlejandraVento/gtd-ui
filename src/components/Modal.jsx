@@ -47,7 +47,7 @@ export default function Modal({
                 </Button>
               </Dialog.ActionTrigger>
               <Button
-                color="var(--lightText)"
+                color="var(--mainText)"
                 bg="var(--secondaryBackground)"
                 _hover={{ bg: 'var(--secondaryText)' }}
                 borderRadius={10}

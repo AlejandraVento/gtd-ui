@@ -12,8 +12,11 @@ import {
 } from '@chakra-ui/react';
 import Modal from '../../components/Modal';
 import { PasswordInput } from '../../components/ui/password-input';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
@@ -72,7 +75,7 @@ export default function Login() {
           >
             <Text
               color="var(--mainText)"
-              as="h2"
+              as="h1"
               fontSize="2xl"
               fontWeight="bold"
               mb={8}
@@ -159,7 +162,7 @@ export default function Login() {
                   </InputGroup>
                 </Field.Root>
                 <Button
-                  color="var(--lightText)"
+                  color="var(--mainText)"
                   bg="var(--secondaryBackground)"
                   borderRadius="full"
                   fontWeight={600}
@@ -170,6 +173,10 @@ export default function Login() {
                   minW="max-content"
                   maxW="max-content"
                   _focus={{ boxShadow: 'none', outline: 'none' }}
+                  onClick={() => {
+                    sessionStorage.setItem('token', '123456789');
+                    navigate('/', { replace: true });
+                  }}
                 >
                   Iniciar
                 </Button>

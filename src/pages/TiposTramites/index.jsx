@@ -96,7 +96,7 @@ export default function TiposTramites() {
         <Flex p={{ base: 6, sm: 8 }} flexDirection="column" gap={8}>
           <Text
             color="var(--mainText)"
-            as="h2"
+            as="h1"
             fontSize="2xl"
             fontWeight="bold"
           >
@@ -113,7 +113,7 @@ export default function TiposTramites() {
           <Flex direction="column" gap={4}>
             <Text
               color="var(--mainText)"
-              as="h3"
+              as="h2"
               fontSize="lg"
               fontWeight="bold"
               mb={0}
