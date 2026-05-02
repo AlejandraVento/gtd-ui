@@ -4,9 +4,9 @@ import { Box } from '@chakra-ui/react';
 import './App.css';
 import Login from './pages/Login';
 import Navbar from './pages/Navbar';
-import InformacionProcesos from './pages/InformacionProcesos';
-import TiposTramites from './pages/TiposTramites';
-import Inicio from './pages/Inicio/index.jsx';
+import ProcessInformation from './pages/ProcessInformation';
+import RequestsTypes from './pages/RequestsTypes';
+import Home from './pages/Home/index.jsx';
 import SidebarLayout from './pages/SidebarLayout';
 import Requests from './pages/Requests';
 import CreateRequest from './pages/Requests/Sections/CreateRequest';
@@ -25,9 +25,9 @@ const App = () => {
           <>
             <Route
               path="/informacion-procesos"
-              element={<InformacionProcesos />}
+              element={<ProcessInformation />}
             />
-            <Route path="/tipos-tramites" element={<TiposTramites />} />
+            <Route path="/tipos-tramites" element={<RequestsTypes />} />
             <Route path="/inicio-sesion" element={<Login />} />
             <Route
               path="/"
@@ -38,7 +38,7 @@ const App = () => {
                 />
               }
             >
-              <Route path="/" element={<Inicio />} />
+              <Route path="/" element={<Home />} />
               <Route path="/tramites" element={<Requests />} />
               <Route path="/crear-solicitud" element={<CreateRequest />} />
             </Route>

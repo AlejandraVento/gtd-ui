@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Flex, Text, Span } from '@chakra-ui/react';
 import RequestSelector from '../../components/RequestSelector';
 
-export default function TiposTramites() {
+export default function RequestsTypes() {
   const [tipoTramite, setTipoTramite] = useState(['']);
 
   return (

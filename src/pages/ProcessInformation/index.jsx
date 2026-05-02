@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text, Span } from '@chakra-ui/react';
 
-export default function InformacionProcesos() {
+export default function ProcessInformation() {
   return (
     <>
       <Flex
