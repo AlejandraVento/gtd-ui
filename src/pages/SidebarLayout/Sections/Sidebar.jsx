@@ -14,7 +14,7 @@ import {
   faAddressCard,
   faRectangleList,
 } from '@fortawesome/free-regular-svg-icons';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 export default function Sidebar({ isOpen, onClose }) {
   const sidebarRef = useRef(null);
@@ -46,7 +46,12 @@ export default function Sidebar({ isOpen, onClose }) {
       maxW={{ base: 'auto', sm: 'min-content' }}
       ref={sidebarRef}
     >
-      <Flex direction="row" height="100%" width="100%">
+      <Flex
+        direction="row"
+        height="100%"
+        minH="calc(100vh - 76px)"
+        width="100%"
+      >
         <Box
           height="100%"
           bg="var(--mainBackground)"
@@ -68,6 +73,8 @@ export default function Sidebar({ isOpen, onClose }) {
 }
 
 function Item({ link, isOpen, closeMenu }) {
+  const { pathname } = useLocation();
+  const isActive = pathname === link.link;
   const isSmallScreen = useBreakpointValue({
     base: false,
     sm: true,
@@ -86,9 +93,13 @@ function Item({ link, isOpen, closeMenu }) {
               textDecoration: 'none',
             }}
             height="44px"
+            width="full"
             display="flex"
             justifyContent="center"
             alignItems="center"
+            bg={isActive ? 'var(--secondaryBackground)' : 'transparent'}
+            borderRadius="md"
+            px={2}
             _focus={{
               outline: 'none',
             }}
@@ -102,7 +113,6 @@ function Item({ link, isOpen, closeMenu }) {
             <Text
               mb={0}
               fontWeight={600}
-              className="text-up-sidebar"
               color="var(--mainText) !important"
               _hover={{
                 color: 'var(--hoverMainText) !important',
@@ -127,6 +137,8 @@ function Item({ link, isOpen, closeMenu }) {
             display="flex"
             justifyContent="center"
             alignItems="center"
+            bg={isActive ? 'var(--secondaryBackground)' : 'transparent'}
+            borderRadius="md"
             _focus={{
               outline: 'none',
             }}
