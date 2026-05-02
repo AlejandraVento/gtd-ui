@@ -10,19 +10,19 @@ const exampleData = [
     type: 'Vacaciones',
     date: '2024-01-01',
     status: 'En proceso',
-    requiresModification: true,
+    modificationRequired: true,
   },
   {
     id: '2',
     type: 'Permiso',
     date: '2024-01-02',
     status: 'Completado',
-    requiresModification: false,
+    modificationRequired: false,
   },
 ];
 
 const headers = [
-  { key: 'type', label: 'Tipo Trámite' },
+  { key: 'type', label: 'Tipo' },
   { key: 'date', label: 'Fecha' },
   { key: 'status', label: 'Estado' },
   { key: 'options', label: 'Opciones' },

@@ -2,6 +2,11 @@ import React from 'react';
 import { Button, Table as ChakraTable } from '@chakra-ui/react';
 
 const Table = ({ headers, data }) => {
+  const resolveCellValue = (row, header) => {
+    const value = row?.[header?.key];
+    return value ?? '';
+  };
+
   return (
     <ChakraTable.Root
       bg="var(--mainBackground)"
@@ -31,78 +36,53 @@ const Table = ({ headers, data }) => {
         {data?.map((row) => {
           return (
             <ChakraTable.Row key={row.id}>
-              <ChakraTable.Cell
-                py={4}
-                fontSize="sm"
-                fontWeight="medium"
-                color={
-                  row?.requiresModification
-                    ? 'var(--dangerText)'
-                    : 'var(--mainText)'
-                }
-                bg="var(--mainBackground)"
-              >
-                {row.type}
-              </ChakraTable.Cell>
-              <ChakraTable.Cell
-                py={4}
-                fontSize="sm"
-                fontWeight="medium"
-                color={
-                  row?.requiresModification
-                    ? 'var(--dangerText)'
-                    : 'var(--mainText)'
-                }
-                bg="var(--mainBackground)"
-              >
-                {row.date}
-              </ChakraTable.Cell>
-              <ChakraTable.Cell
-                py={4}
-                fontSize="sm"
-                fontWeight="medium"
-                color={
-                  row?.requiresModification
-                    ? 'var(--dangerText)'
-                    : 'var(--mainText)'
-                }
-                bg="var(--mainBackground)"
-              >
-                {row.status}
-              </ChakraTable.Cell>
-              <ChakraTable.Cell
-                py={4}
-                fontSize="sm"
-                color="var(--mainText)"
-                bg="var(--mainBackground)"
-                fontWeight="medium"
-              >
-                <Button
-                  color="var(--mainText)"
-                  bg={
-                    row?.requiresModification
-                      ? 'var(--secondaryBackground)'
-                      : 'var(--mainBackground)'
-                  }
-                  border={
-                    row?.requiresModification
-                      ? 'none'
-                      : '1px solid var(--lightGreyBorder)'
-                  }
-                  borderRadius={10}
-                  fontWeight={600}
-                  fontSize="sm"
-                  py={4}
-                  px={4}
-                  minH="44px"
-                  minW="max-content"
-                  maxW="max-content"
-                  _focus={{ boxShadow: 'none', outline: 'none' }}
-                  onClick={() => {}}
-                >
-                  {row?.requiresModification ? 'Editar' : 'Ver'}
-                </Button>
-              </ChakraTable.Cell>
+              {headers?.map((header) => {
+                const isOptionsColumn = header?.key === 'options';
+                return (
+                  <ChakraTable.Cell
+                    key={`${row.id}-${header.key}`}
+                    py={4}
+                    fontSize="sm"
+                    fontWeight="medium"
+                    color={
+                      !isOptionsColumn && row?.modificationRequired
+                        ? 'var(--dangerText)'
+                        : 'var(--mainText)'
+                    }
+                    bg="var(--mainBackground)"
+                  >
+                    {isOptionsColumn ? (
+                      <Button
+                        color="var(--mainText)"
+                        bg={
+                          row?.modificationRequired
+                            ? 'var(--secondaryBackground)'
+                            : 'var(--mainBackground)'
+                        }
+                        border={
+                          row?.modificationRequired
+                            ? 'none'
+                            : '1px solid var(--lightGreyBorder)'
+                        }
+                        borderRadius={10}
+                        fontWeight={600}
+                        fontSize="sm"
+                        py={4}
+                        px={4}
+                        minH="44px"
+                        minW="max-content"
+                        maxW="max-content"
+                        _focus={{ boxShadow: 'none', outline: 'none' }}
+                        onClick={() => {}}
+                      >
+                        {row?.modificationRequired ? 'Editar' : 'Ver'}
+                      </Button>
+                    ) : (
+                      resolveCellValue(row, header)
+                    )}
+                  </ChakraTable.Cell>
+                );
+              })}
             </ChakraTable.Row>
           );
         })}

@@ -10,6 +10,7 @@ import Home from './pages/Home/index.jsx';
 import SidebarLayout from './pages/SidebarLayout';
 import Requests from './pages/Requests';
 import CreateRequest from './pages/Requests/Sections/CreateRequest';
+import Documents from './pages/Documents';
 
 const App = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -41,6 +42,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/tramites" element={<Requests />} />
               <Route path="/crear-solicitud" element={<CreateRequest />} />
+              <Route path="/documentos" element={<Documents />} />
             </Route>
             <Route path="*" element={<Navigate to="/inicio-sesion" />} />
           </>
