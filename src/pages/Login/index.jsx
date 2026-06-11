@@ -29,6 +29,10 @@ export default function Login() {
           onClose={() => setIsResetPasswordOpen(false)}
           title="¿Olvidaste tu contraseña?"
           description="Ingrese su correo electrónico"
+          actionButtonText="Recuperar"
+          actionButtonFunction={() => {
+            // TO DO
+          }}
         >
           <Field.Root required>
             <Field.Label>

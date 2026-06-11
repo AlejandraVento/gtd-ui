@@ -6,6 +6,8 @@ export default function Modal({
   title,
   description,
   children,
+  actionButtonText,
+  actionButtonFunction,
 }) {
   return (
     <Dialog.Root
@@ -42,21 +44,25 @@ export default function Modal({
                   borderColor="var(--lightGreyBorder)"
                   borderRadius={10}
                   _focus={{ outline: 'none' }}
+                  onClick={onClose}
                 >
                   Cancelar
                 </Button>
               </Dialog.ActionTrigger>
-              <Button
-                color="var(--mainText)"
-                bg="var(--secondaryBackground)"
-                _hover={{ bg: 'var(--secondaryText)' }}
-                borderRadius={10}
-              >
-                Recuperar
-              </Button>
+              {actionButtonText && actionButtonFunction && (
+                <Button
+                  color="var(--mainText)"
+                  bg="var(--secondaryBackground)"
+                  _hover={{ bg: 'var(--secondaryText)' }}
+                  borderRadius={10}
+                  onClick={actionButtonFunction}
+                >
+                  {actionButtonText}
+                </Button>
+              )}
             </Dialog.Footer>
             <Dialog.CloseTrigger _focus={{ outline: 'none' }} asChild>
-              <CloseButton size="sm" />
+              <CloseButton size="sm" onClick={onClose} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>
