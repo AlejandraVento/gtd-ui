@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Table as ChakraTable } from '@chakra-ui/react';
 
-const Table = ({ headers, data }) => {
+const Table = ({ headers, data, onClickOption }) => {
   const resolveCellValue = (row, header) => {
     const value = row?.[header?.key];
     return value ?? '';
@@ -73,7 +73,7 @@ const Table = ({ headers, data }) => {
                         minW="max-content"
                         maxW="max-content"
                         _focus={{ boxShadow: 'none', outline: 'none' }}
-                        onClick={() => {}}
+                        onClick={() => onClickOption(row)}
                       >
                         {row?.modificationRequired ? 'Editar' : 'Ver'}
                       </Button>

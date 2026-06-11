@@ -3,6 +3,7 @@ import Table from '../../components/Table';
 import { Button, Card, Flex, Text } from '@chakra-ui/react';
 import Pagination from '../../components/Pagination';
 import { useNavigate } from 'react-router';
+import ProgressModal from './Sections/ProgressModal';
 
 const exampleData = [
   {
@@ -30,74 +31,92 @@ const headers = [
 
 const Requests = () => {
   const navigate = useNavigate();
-
+  const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
   const pageSize = 5;
 
   return (
-    <Flex
-      w="100%"
-      p={{ base: 8, md: 8 }}
-      flexDirection={{ base: 'column-reverse', md: 'row' }}
-      gap={{ base: 16, md: 8 }}
-    >
-      <Card.Root
-        alignItems="center"
-        flexDirection="row"
-        borderRadius={{ base: 0, sm: 18 }}
-        bg="var(--mainBackground)"
-        boxShadow="sm"
-        border="1px solid var(--lightGreyBorder)"
-        p={0}
-        w="full"
+    <>
+      {isOpen && (
+        <ProgressModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title="Solicitud de Nombramiento Docente 03/03/2026"
+          description="Estado del proceso de la solicitud del trámite: Solicitud de Nombramiento Provisional para el Personal Profesional, Administrativo, Técnico y de Servicio"
+        />
+      )}
+      <Flex
+        w="100%"
+        p={{ base: 8, md: 8 }}
+        flexDirection={{ base: 'column-reverse', md: 'row' }}
+        gap={{ base: 16, md: 8 }}
       >
-        <Card.Body p={0}>
-          <Flex
-            p={6}
-            justifyContent="space-between"
-            alignItems="center"
-            direction={{ base: 'column', md: 'row' }}
-            w="full"
-          >
-            <Text as="h1" fontWeight={600} fontSize="2xl">
-              Tramites
-            </Text>
-            <Button
-              color="var(--mainText)"
-              bg="var(--secondaryBackground)"
-              borderRadius={10}
-              fontWeight={600}
-              fontSize="md"
-              py={4}
-              px={4}
-              minH="44px"
-              minW="max-content"
-              maxW="max-content"
-              _focus={{ boxShadow: 'none', outline: 'none' }}
-              onClick={() => {
-                navigate('/crear-solicitud', { replace: true });
-              }}
+        <Card.Root
+          alignItems="center"
+          flexDirection="row"
+          borderRadius={{ base: 0, sm: 18 }}
+          bg="var(--mainBackground)"
+          boxShadow="sm"
+          border="1px solid var(--lightGreyBorder)"
+          p={0}
+          w="full"
+        >
+          <Card.Body p={0}>
+            <Flex
+              p={6}
+              justifyContent="space-between"
+              alignItems="center"
+              direction={{ base: 'column', md: 'row' }}
+              w="full"
             >
-              Crear solicitud de trámite
-            </Button>
-          </Flex>
-          <Table data={exampleData} headers={headers} />
-          <Card.Footer justifyContent="space-between" alignItems="center" p={6}>
-            <Text fontSize="sm" color="var(--mainText)">
-              Mostrando {((page - 1) * pageSize + 1).toString()} de&nbsp;
-              {Math.min(page * pageSize, exampleData.length)} de&nbsp;
-              {exampleData.length} trámites
-            </Text>
-            <Pagination
-              page={page}
-              setPage={setPage}
-              pageSize={pageSize}
-              total={exampleData.length}
+              <Text as="h1" fontWeight={600} fontSize="2xl">
+                Tramites
+              </Text>
+              <Button
+                color="var(--mainText)"
+                bg="var(--secondaryBackground)"
+                borderRadius={10}
+                fontWeight={600}
+                fontSize="md"
+                py={4}
+                px={4}
+                minH="44px"
+                minW="max-content"
+                maxW="max-content"
+                _focus={{ boxShadow: 'none', outline: 'none' }}
+                onClick={() => {
+                  navigate('/crear-solicitud', { replace: true });
+                }}
+              >
+                Crear solicitud de trámite
+              </Button>
+            </Flex>
+            <Table
+              data={exampleData}
+              headers={headers}
+              onClickOption={() => setIsOpen(true)}
             />
-          </Card.Footer>
-        </Card.Body>
-      </Card.Root>
-    </Flex>
+            <Card.Footer
+              justifyContent="space-between"
+              alignItems="center"
+              p={6}
+            >
+              <Text fontSize="sm" color="var(--mainText)">
+                Mostrando {((page - 1) * pageSize + 1).toString()} de&nbsp;
+                {Math.min(page * pageSize, exampleData.length)} de&nbsp;
+                {exampleData.length} trámites
+              </Text>
+              <Pagination
+                page={page}
+                setPage={setPage}
+                pageSize={pageSize}
+                total={exampleData.length}
+              />
+            </Card.Footer>
+          </Card.Body>
+        </Card.Root>
+      </Flex>
+    </>
   );
 };
 
