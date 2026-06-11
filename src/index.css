@@ -15,20 +15,3 @@ body {
   --successText: #1d7a00;
 }
 
-[data-theme='dark'],
-[data-theme='dark'] body {
-  /* Background */
-  --mainBackground: #2e2e2e;
-  --secondaryBackground: #7a6500;
-  --dangerBackground: #ffc5c5;
-  /* Border */
-  --lightGreyBorder: #e4e4e7;
-  /* Links */
-  --mainLink: #9b9dff;
-  /* Text */
-  --mainText: #ffffff;
-  --secondaryText: #d4af37;
-  --lightText: #ffffff;
-  --dangerText: #ff6b6b;
-  --successText: #80ec51;
-}
