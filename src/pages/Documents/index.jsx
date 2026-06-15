@@ -1,25 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '../../components/Table';
 import { Card, Flex, Text } from '@chakra-ui/react';
 import Pagination from '../../components/Pagination';
 import requiresModification from '../../utils/requiresModication';
-
-const exampleData = [
-  {
-    id: '1',
-    file_type: 'RIF',
-    updated_at: '2024-01-01',
-    expiration_date: '2024-12-31',
-    modificationRequired: requiresModification('2024-12-31'),
-  },
-  {
-    id: '2',
-    file_type: 'Cedula',
-    updated_at: '2024-01-02',
-    expiration_date: '2026-12-31',
-    modificationRequired: requiresModification('2026-12-31'),
-  },
-];
+import users from '../../api/users';
+import { toaster } from '../../utils/toast';
+import files from '../../api/files';
 
 const headers = [
   { key: 'file_type', label: 'Tipo' },
@@ -29,8 +15,63 @@ const headers = [
 ];
 
 const Documents = () => {
+  const [userId, setUserId] = useState('');
+  const [userFiles, setUserFiles] = useState([]);
   const [page, setPage] = useState(1);
   const pageSize = 5;
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const response = await users.getCurrentUser();
+      if (response?.success) {
+        setUserId(response?.data?.user?.id);
+      }
+    } catch (error) {
+      toaster.create({
+        description: error.message,
+        type: 'error',
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!userId) return;
+    getUserFiles();
+  }, [userId]);
+
+  const getUserFiles = async () => {
+    try {
+      const response = await files.getUserFiles(userId);
+      if (response?.success) {
+        parseFilesData(response?.data?.files || []);
+      }
+    } catch (error) {
+      toaster.create({
+        description: error.message,
+        type: 'error',
+      });
+    }
+  };
+
+  const parseFilesData = async (files) => {
+    if (!files?.length) {
+      setUserFiles([]);
+      return;
+    }
+    const parsedFiles = files.map((file) => ({
+      id: file.id,
+      file_type: file.file_type,
+      updated_at: new Date(file.updated_at).toLocaleDateString(),
+      expiration_date: new Date(file.expiration_date).toLocaleDateString(),
+      modificationRequired: requiresModification(file.expiration_date),
+    }));
+    setUserFiles(parsedFiles);
+  };
+
   return (
     <Flex
       w="100%"
@@ -52,18 +93,18 @@ const Documents = () => {
           <Text as="h1" p={6} fontWeight={600} fontSize="2xl">
             Documentos
           </Text>
-          <Table data={exampleData} headers={headers} />
+          <Table data={userFiles} headers={headers} />
           <Card.Footer justifyContent="space-between" alignItems="center" p={6}>
             <Text fontSize="sm" color="var(--mainText)">
               Mostrando {((page - 1) * pageSize + 1).toString()} de&nbsp;
-              {Math.min(page * pageSize, exampleData.length)} de&nbsp;
-              {exampleData.length} documentos
+              {Math.min(page * pageSize, userFiles.length)} de&nbsp;
+              {userFiles.length} documentos
             </Text>
             <Pagination
               page={page}
               setPage={setPage}
               pageSize={pageSize}
-              total={exampleData.length}
+              total={userFiles.length}
             />
           </Card.Footer>
         </Card.Body>

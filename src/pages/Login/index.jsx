@@ -52,6 +52,7 @@ export default function Login() {
       });
     }
   };
+
   return (
     <>
       {isResetPasswordOpen && (
