@@ -11,6 +11,7 @@ import SidebarLayout from './pages/SidebarLayout';
 import Requests from './pages/Requests';
 import CreateRequest from './pages/Requests/Sections/CreateRequest';
 import Documents from './pages/Documents';
+import { Toaster } from './utils/toast';
 
 const App = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -22,6 +23,7 @@ const App = () => {
           onClose={() => setOpenSidebar(false)}
           onOpen={() => setOpenSidebar(true)}
         />
+        <Toaster />
         <Routes>
           <>
             <Route
