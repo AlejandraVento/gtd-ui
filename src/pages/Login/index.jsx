@@ -13,6 +13,8 @@ import {
 import Modal from '../../components/Modal';
 import { PasswordInput } from '../../components/ui/password-input';
 import { useNavigate } from 'react-router';
+import auth from '../../api/auth';
+import { toaster } from '../../utils/toast';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,6 +23,35 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
 
+  const login = async () => {
+    if (!email) {
+      toaster.create({
+        description: 'Email is required',
+        type: 'error',
+      });
+      return;
+    }
+    if (!password) {
+      toaster.create({
+        description: 'Password is required',
+        type: 'error',
+      });
+      return;
+    }
+    try {
+      const response = await auth.login(email, password);
+      if (response?.success) {
+        sessionStorage.setItem('access_token', response?.data?.token);
+        navigate('/', { replace: true });
+        console.log('logged in');
+      }
+    } catch (error) {
+      toaster.create({
+        description: error.message,
+        type: 'error',
+      });
+    }
+  };
   return (
     <>
       {isResetPasswordOpen && (
@@ -177,10 +208,8 @@ export default function Login() {
                   minW="max-content"
                   maxW="max-content"
                   _focus={{ boxShadow: 'none', outline: 'none' }}
-                  onClick={() => {
-                    sessionStorage.setItem('token', '123456789');
-                    navigate('/', { replace: true });
-                  }}
+                  onClick={login}
+                  disabled={!email || !password}
                 >
                   Iniciar
                 </Button>

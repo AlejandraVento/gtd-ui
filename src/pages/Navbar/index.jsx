@@ -46,12 +46,12 @@ export default function Navbar({ isOpen, onClose, onOpen }) {
   };
 
   useEffect(() => {
-    if (sessionStorage.getItem('token')) {
+    if (sessionStorage.getItem('access_token')) {
       setDisplay('inicio');
     } else {
       setDisplay('inicio-sesion');
     }
-  }, [sessionStorage.getItem('token')]);
+  }, [sessionStorage.getItem('access_token')]);
 
   return (
     <>

@@ -28,7 +28,7 @@ export default function List({ menuRef, setIsOpen, isOpen }) {
       title: 'Cerrar sesión',
       alt: 'Cerrar sesión',
       onClick: () => {
-        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('access_token');
         setIsOpen(false);
         navigate('/inicio-sesion', { replace: true });
       },

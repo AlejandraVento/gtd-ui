@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Storage from '../utils/local-storage';
 
 export const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -21,7 +20,7 @@ class ApiService {
         this.session = axios.create(defaultOptions);
 
         this.session.interceptors.request.use((config) => {
-            const token = Storage.get('access_token');
+            const token = sessionStorage.getItem('access_token');
             if (token) {
                 config.headers['Authorization'] = `Bearer ${token}`;
             }
@@ -36,13 +35,13 @@ class ApiService {
             },
             (error) => {
                 if (error?.response?.status === 401) {
-                    Storage.clear();
+                    sessionStorage.clear();
                     console.log('error 401', error);
                 }
                 if (
                     error?.response?.status === 403
                 ) {
-                    Storage.clear();
+                    sessionStorage.clear();
                     console.log('error 403', error);
                 }
                 return Promise.reject(error?.response?.data?.errors);
