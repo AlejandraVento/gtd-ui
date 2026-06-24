@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
 import './App.css';
 import Login from './pages/Login';
@@ -14,7 +14,17 @@ import Documents from './pages/Documents';
 import { Toaster } from './utils/toast';
 
 const App = () => {
+  const navigate = useNavigate();
   const [openSidebar, setOpenSidebar] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('access_token')) {
+      navigate('/');
+    } else {
+      navigate('/inicio-sesion');
+    }
+  }, [sessionStorage.getItem('access_token')]);
+
   return (
     <>
       <Box bg="var(--mainBackground)">
