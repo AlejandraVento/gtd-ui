@@ -27,7 +27,14 @@ export default function Modal({
             borderRadius="2xl"
           >
             <Dialog.Header display="flex" justifyContent="center">
-              <Dialog.Title fontSize="xl" mb={0} fontWeight={600}>
+              <Dialog.Title
+                wordBreak="break-word"
+                px={4}
+                fontSize="xl"
+                mb={0}
+                fontWeight={600}
+                textAlign="center"
+              >
                 {title}
               </Dialog.Title>
             </Dialog.Header>

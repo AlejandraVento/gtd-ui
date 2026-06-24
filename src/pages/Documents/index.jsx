@@ -6,6 +6,7 @@ import requiresModification from '../../utils/requiresModication';
 import users from '../../api/users';
 import { toaster } from '../../utils/toast';
 import files from '../../api/files';
+import EditDocumentModal from './Sections/EditDocumentModal';
 
 const headers = [
   { key: 'file_type', label: 'Tipo' },
@@ -17,7 +18,9 @@ const headers = [
 const Documents = () => {
   const [userId, setUserId] = useState('');
   const [userFiles, setUserFiles] = useState([]);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [selectedFile, setSelectedFile] = useState(null);
   const pageSize = 5;
 
   useEffect(() => {
@@ -66,50 +69,78 @@ const Documents = () => {
       id: file.id,
       file_type: file.file_type,
       updated_at: new Date(file.updated_at).toLocaleDateString(),
-      expiration_date: new Date(file.expiration_date).toLocaleDateString(),
+      expiration_date: file.expiration_date,
       modificationRequired: requiresModification(file.expiration_date),
+      publicUrl: file.publicUrl,
     }));
     setUserFiles(parsedFiles);
   };
 
+  const handleClickOption = (row) => {
+    handleEditDocument(row);
+  };
+
+  const handleEditDocument = (file) => {
+    setSelectedFile(file);
+    setIsEditOpen(true);
+  };
+
   return (
-    <Flex
-      w="100%"
-      p={{ base: 8, md: 8 }}
-      flexDirection={{ base: 'column-reverse', md: 'row' }}
-      gap={{ base: 16, md: 8 }}
-    >
-      <Card.Root
-        alignItems="center"
-        flexDirection="row"
-        borderRadius={{ base: 0, sm: 18 }}
-        bg="var(--mainBackground)"
-        boxShadow="sm"
-        border="1px solid var(--lightGreyBorder)"
-        p={0}
-        w="full"
+    <>
+      {isEditOpen && (
+        <EditDocumentModal
+          isOpen={isEditOpen}
+          setIsOpen={setIsEditOpen}
+          file={selectedFile}
+          getUserFiles={getUserFiles}
+        />
+      )}
+      <Flex
+        w="100%"
+        p={{ base: 8, md: 8 }}
+        flexDirection={{ base: 'column-reverse', md: 'row' }}
+        gap={{ base: 16, md: 8 }}
       >
-        <Card.Body p={0}>
-          <Text as="h1" p={6} fontWeight={600} fontSize="2xl">
-            Documentos
-          </Text>
-          <Table data={userFiles} headers={headers} />
-          <Card.Footer justifyContent="space-between" alignItems="center" p={6}>
-            <Text fontSize="sm" color="var(--mainText)">
-              Mostrando {((page - 1) * pageSize + 1).toString()} de&nbsp;
-              {Math.min(page * pageSize, userFiles.length)} de&nbsp;
-              {userFiles.length} documentos
+        <Card.Root
+          alignItems="center"
+          flexDirection="row"
+          borderRadius={{ base: 0, sm: 18 }}
+          bg="var(--mainBackground)"
+          boxShadow="sm"
+          border="1px solid var(--lightGreyBorder)"
+          p={0}
+          w="full"
+        >
+          <Card.Body p={0}>
+            <Text as="h1" p={6} fontWeight={600} fontSize="2xl">
+              Documentos
             </Text>
-            <Pagination
-              page={page}
-              setPage={setPage}
-              pageSize={pageSize}
-              total={userFiles.length}
+            <Table
+              data={userFiles}
+              headers={headers}
+              onClickOption={(row) => handleClickOption(row)}
             />
-          </Card.Footer>
-        </Card.Body>
-      </Card.Root>
-    </Flex>
+            <Card.Footer
+              justifyContent="space-between"
+              alignItems="center"
+              p={6}
+            >
+              <Text fontSize="sm" color="var(--mainText)">
+                Mostrando {((page - 1) * pageSize + 1).toString()} de&nbsp;
+                {Math.min(page * pageSize, userFiles.length)} de&nbsp;
+                {userFiles.length} documentos
+              </Text>
+              <Pagination
+                page={page}
+                setPage={setPage}
+                pageSize={pageSize}
+                total={userFiles.length}
+              />
+            </Card.Footer>
+          </Card.Body>
+        </Card.Root>
+      </Flex>
+    </>
   );
 };
 
